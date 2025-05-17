@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/submissions")
@@ -19,8 +20,12 @@ public class SubmissionController {
     public ResponseEntity<Submission> submitSolution(
             @PathVariable Long problemId,
             @RequestParam String language,
-            @RequestBody String sourceCode) {
+            @RequestBody Map<String, String> request) {
         try {
+            String sourceCode = request.get("sourceCode");
+            if (sourceCode == null) {
+                return ResponseEntity.badRequest().build();
+            }
             Submission submission = submissionService.submitSolution(problemId, sourceCode, language);
             return ResponseEntity.ok(submission);
         } catch (RuntimeException e) {

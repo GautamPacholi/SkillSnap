@@ -12,7 +12,7 @@ const api = {
 
   // Submissions
   submitSolution: (problemId, language, sourceCode) => 
-    axios.post(`${API_BASE_URL}/submissions/submit/${problemId}?language=${language}`, sourceCode),
+    axios.post(`${API_BASE_URL}/submissions/submit/${problemId}?language=${language}`, { sourceCode }),
   getSubmissionsByProblem: (problemId) => 
     axios.get(`${API_BASE_URL}/submissions/problem/${problemId}`),
   getAllSubmissions: () => axios.get(`${API_BASE_URL}/submissions`)
